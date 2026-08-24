@@ -2,19 +2,6 @@
   "$schema": "https://opencode.ai/config.json",
   "instructions": ["~/repos/github.com/Breee/ai/opencode/AGENTS.md"],
   "small_model": "github-copilot/mai-code-1.1-flash",
-  "agent": {
-    "explore": {
-      "model": "github-copilot/mai-code-1.1-flash",
-    },
-    "general": {
-      "model": "github-copilot/grok-4.6",
-    },
-    "browser": {
-      "tools": {
-        "playwright*": true,
-      },
-    },
-  },
   "mcp": {
     "mastery": {
       "type": "local",
