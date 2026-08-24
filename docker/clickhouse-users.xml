@@ -1,0 +1,8 @@
+<clickhouse>
+    <profiles>
+        <default>
+            <max_threads>2</max_threads>
+            <background_merges_mutations_concurrency_ratio>1</background_merges_mutations_concurrency_ratio>
+        </default>
+    </profiles>
+</clickhouse>

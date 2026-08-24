@@ -1,0 +1,15 @@
+{
+  "servers": {
+    "langfuse": {
+      "type": "http",
+      "url": "http://langfuse.localhost/api/public/mcp",
+      "headers": {
+        "Authorization": "Basic cGstbGYtdnNjb2RlLWxvY2FsOnNrLWxmLXZzY29kZS1sb2NhbA=="
+      }
+    },
+    "langfuse-docs": {
+      "type": "http",
+      "url": "https://langfuse.com/api/mcp"
+    }
+  }
+}

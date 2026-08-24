@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Resolve a Langfuse sessionId (= Copilot chat session id) to its VS Code workspace.
+#   ./bin/lf-session <sessionId>          print workspace folder + local artefacts
+#   ./bin/lf-session <sessionId> --open   also open that folder in VS Code
+set -euo pipefail
+
+SESSION="${1:-}"
+STORAGE="${VSCODE_WORKSPACE_STORAGE:-$HOME/.config/Code/User/workspaceStorage}"
+
+if [[ -z "$SESSION" ]]; then
+  echo "usage: $(basename "$0") <sessionId> [--open]" >&2
+  exit 2
+fi
+
+hit=$(find "$STORAGE" -mindepth 3 -maxdepth 3 -path "*/chatSessions/${SESSION}.jsonl" -print -quit 2>/dev/null || true)
+if [[ -z "$hit" ]]; then
+  echo "no workspace found for session ${SESSION} under ${STORAGE}" >&2
+  exit 1
+fi
+
+ws_dir=$(dirname "$(dirname "$hit")")
+folder_uri=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("folder",""))' "$ws_dir/workspace.json")
+folder=${folder_uri#file://}
+
+printf 'session      %s\n' "$SESSION"
+printf 'workspace    %s\n' "$folder"
+printf 'transcript   %s\n' "$ws_dir/GitHub.copilot-chat/transcripts/${SESSION}.jsonl"
+printf 'debug log    %s\n' "$ws_dir/GitHub.copilot-chat/debug-logs/${SESSION}"
+printf 'langfuse     http://langfuse.localhost/project/vscode/sessions/%s\n' "$SESSION"
+
+if [[ "${2:-}" == "--open" ]]; then
+  code "$folder"
+fi

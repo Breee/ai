@@ -1,0 +1,953 @@
+{
+  "exportVersion": 1,
+  "exportedAt": "2026-08-20T08:56:38+02:00",
+  "source": {
+    "host": "langfuse.localhost",
+    "project": "vscode"
+  },
+  "dashboards": [
+    {
+      "id": "cmt15z3gk0003mu0762qnriq6",
+      "createdAt": "2026-08-20T06:53:19.557Z",
+      "updatedAt": "2026-08-20T06:54:32.453Z",
+      "name": "AI-Friendly Docs Impact",
+      "description": "A/B dashboard for proving impact of AI-friendly docs on agent efficiency. Compare environments (e.g. docs-baseline vs docs-ai-friendly), then filter by repo via metadata.git_repo or tags. Core metrics: total cost, total tokens, turns, avg tokens per turn, and cost trend.",
+      "definition": {
+        "widgets": [
+          {
+            "type": "widget",
+            "id": "a6a55fae-61a8-4ee5-b021-fc87077d65e1",
+            "widgetId": "cmt15zcqw0006mu07rvoaymwh",
+            "x": 0,
+            "y": 0,
+            "width": 4,
+            "height": 5
+          },
+          {
+            "type": "widget",
+            "id": "4517a038-d735-4b02-aa3c-a3be52935fa8",
+            "widgetId": "cmt15zcrm000cmu0706xcvaoe",
+            "x": 4,
+            "y": 0,
+            "width": 4,
+            "height": 5
+          },
+          {
+            "type": "widget",
+            "id": "29910a4f-6ba4-4ff8-b16b-a2a0f4cc0a5b",
+            "widgetId": "cmt15zcs2000gmu074gdu5s47",
+            "x": 0,
+            "y": 12,
+            "width": 12,
+            "height": 8
+          },
+          {
+            "type": "widget",
+            "id": "dc4b2252-2660-4822-af21-b0b123f37bf9",
+            "widgetId": "cmt15zcrb000amu07spmwdxoh",
+            "x": 4,
+            "y": 5,
+            "width": 8,
+            "height": 7
+          },
+          {
+            "type": "widget",
+            "id": "433d0603-03a3-4c82-825e-82cf82feefe7",
+            "widgetId": "cmt15zcrv000emu07aif256ku",
+            "x": 8,
+            "y": 0,
+            "width": 4,
+            "height": 5
+          },
+          {
+            "type": "widget",
+            "id": "77a1fc5c-af4a-4278-a198-c7e2cf98d05c",
+            "widgetId": "cmt15zcr50008mu07bw73rvx4",
+            "x": 0,
+            "y": 5,
+            "width": 4,
+            "height": 5
+          }
+        ]
+      },
+      "filters": [],
+      "url": "http://langfuse.localhost/project/vscode/dashboards/cmt15z3gk0003mu0762qnriq6"
+    },
+    {
+      "id": "cmt0isvrv000spd07w52icwm1",
+      "createdAt": "2026-08-19T20:04:38.491Z",
+      "updatedAt": "2026-08-19T20:04:49.778Z",
+      "name": "Repo Cost Breakdown",
+      "description": "What cost the most per git repo: operations ranked by input tokens, cache behaviour per LLM call, and file access patterns. Filter by metadata.git_repo (string contains) to scope to one repo.",
+      "definition": {
+        "widgets": [
+          {
+            "type": "widget",
+            "id": "ee74e87e-2982-489b-a697-81e76a3e255f",
+            "widgetId": "cmt0isqzg000jpd0736h8hpar",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 8
+          },
+          {
+            "type": "widget",
+            "id": "02b96c1e-753a-448b-b2a0-c9a57d5c3595",
+            "widgetId": "cmt0isqzg000mpd070z6umdsl",
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 8
+          },
+          {
+            "type": "widget",
+            "id": "7ef5f1d3-c4e3-4d85-8301-18a8059ac27c",
+            "widgetId": "cmt0isqzg000kpd07wdneuomf",
+            "x": 0,
+            "y": 17,
+            "width": 12,
+            "height": 9
+          }
+        ]
+      },
+      "filters": [
+        {
+          "type": "stringObject",
+          "column": "metadata",
+          "key": "git_repo",
+          "operator": "contains",
+          "value": "Breee"
+        }
+      ],
+      "url": "http://langfuse.localhost/project/vscode/dashboards/cmt0isvrv000spd07w52icwm1"
+    },
+    {
+      "id": "cmt0hfj3p0005nq07hys11zmc",
+      "createdAt": "2026-08-19T19:26:15.925Z",
+      "updatedAt": "2026-08-19T19:58:33.645Z",
+      "name": "Copilot Sessions",
+      "description": "Per-session view of Copilot Chat agent activity: token burn, prompt-cache behaviour, model mix, tool usage and latency. Cost fields are always 0 (Copilot sends no prices) — use token volume, weighted by cache type, as the cost proxy.",
+      "definition": {
+        "widgets": [
+          {
+            "type": "widget",
+            "id": "74065766-a927-4e0d-ac76-03d6e8d4ba5a",
+            "widgetId": "cmt0hfsbp000nnq078nrg06ao",
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          },
+          {
+            "type": "widget",
+            "id": "292fc1dd-f731-402f-bc4e-cbe3951b4ca0",
+            "widgetId": "cmt0hfsbn000knq07ypn6ns50",
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          },
+          {
+            "type": "widget",
+            "id": "fd695b0a-d901-4e33-a599-df2892917be2",
+            "widgetId": "cmt0hfsbn000lnq07asszpz9v",
+            "x": 6,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          },
+          {
+            "type": "widget",
+            "id": "d40f8190-36d0-46f1-a024-87f8951389e7",
+            "widgetId": "cmt0hfsb5000hnq072tc9blr7",
+            "x": 9,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          },
+          {
+            "type": "widget",
+            "id": "aa5a0f66-f8df-41c6-bb37-558a61e42711",
+            "widgetId": "cmt0hfj4l000anq07dk9m8i7a",
+            "x": 0,
+            "y": 4,
+            "width": 8,
+            "height": 7
+          },
+          {
+            "type": "widget",
+            "id": "22abbd39-ecd1-4931-a93d-e48e542547b8",
+            "widgetId": "cmt0hg2uu000tnq07xa3rpa57",
+            "x": 8,
+            "y": 4,
+            "width": 4,
+            "height": 7
+          },
+          {
+            "type": "widget",
+            "id": "f9a55437-6017-460d-b684-1ca5b3b873f9",
+            "widgetId": "cmt0hfj4b0008nq076949bj72",
+            "x": 0,
+            "y": 11,
+            "width": 12,
+            "height": 8
+          },
+          {
+            "type": "widget",
+            "id": "2aa0a2ae-0062-48af-b1b8-5a4b89376edc",
+            "widgetId": "cmt0hfj4u000cnq07dtm1zq1x",
+            "x": 0,
+            "y": 19,
+            "width": 6,
+            "height": 7
+          },
+          {
+            "type": "widget",
+            "id": "cfd7424f-7ea2-4a5b-85de-aa0f3206bdae",
+            "widgetId": "cmt0hg2vq000ynq07wiugo8w9",
+            "x": 6,
+            "y": 19,
+            "width": 6,
+            "height": 7
+          },
+          {
+            "type": "widget",
+            "id": "97cf9046-ee2d-49e5-b3b4-cb588abf74ae",
+            "widgetId": "cmt0hg2vr0010nq07vdlvx3al",
+            "x": 8,
+            "y": 26,
+            "width": 4,
+            "height": 6
+          },
+          {
+            "type": "widget",
+            "id": "5869f745-a567-4aba-b952-d8ee2b46023a",
+            "widgetId": "cmt0if3hh0008pd07w7vy0bag",
+            "x": 0,
+            "y": 32,
+            "width": 12,
+            "height": 8
+          }
+        ]
+      },
+      "filters": [
+        {
+          "column": "Tags",
+          "operator": "any of",
+          "value": [
+            "github.com/Breee/localstack"
+          ],
+          "type": "arrayOptions"
+        }
+      ],
+      "url": "http://langfuse.localhost/project/vscode/dashboards/cmt0hfj3p0005nq07hys11zmc"
+    },
+    {
+      "id": "cmt0hczjo0003nq0742gvgl8i",
+      "createdAt": "2026-08-19T19:24:17.269Z",
+      "updatedAt": "2026-08-19T19:24:17.269Z",
+      "name": "test",
+      "description": "",
+      "definition": {
+        "widgets": []
+      },
+      "filters": [],
+      "url": "http://langfuse.localhost/project/vscode/dashboards/cmt0hczjo0003nq0742gvgl8i"
+    }
+  ],
+  "widgets": [
+    {
+      "id": "cmt15zcs2000gmu074gdu5s47",
+      "createdAt": "2026-08-20T06:53:31.634Z",
+      "updatedAt": "2026-08-20T06:53:31.634Z",
+      "name": "Cost Trend by Environment",
+      "description": "Time series of generation cost by environment.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "environment"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "totalCost",
+          "agg": "sum"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "LINE_TIME_SERIES",
+      "chartConfig": {
+        "type": "LINE_TIME_SERIES"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt15zcs2000gmu074gdu5s47"
+    },
+    {
+      "id": "cmt15zcrv000emu07aif256ku",
+      "createdAt": "2026-08-20T06:53:31.627Z",
+      "updatedAt": "2026-08-20T06:53:31.627Z",
+      "name": "Turns by Environment",
+      "description": "Count of generation observations (turn proxy) per environment.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "environment"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "traceId",
+          "agg": "count"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "VERTICAL_BAR",
+      "chartConfig": {
+        "type": "VERTICAL_BAR"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt15zcrv000emu07aif256ku"
+    },
+    {
+      "id": "cmt15zcrm000cmu0706xcvaoe",
+      "createdAt": "2026-08-20T06:53:31.618Z",
+      "updatedAt": "2026-08-20T06:53:31.618Z",
+      "name": "Total Tokens by Environment",
+      "description": "Sum of generation tokens split by experiment environment.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "environment"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "totalTokens",
+          "agg": "sum"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "VERTICAL_BAR",
+      "chartConfig": {
+        "type": "VERTICAL_BAR"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt15zcrm000cmu0706xcvaoe"
+    },
+    {
+      "id": "cmt15zcrb000amu07spmwdxoh",
+      "createdAt": "2026-08-20T06:53:31.607Z",
+      "updatedAt": "2026-08-20T06:53:31.607Z",
+      "name": "Top Costly Operations",
+      "description": "Most expensive generation operations by name.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "name"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "totalCost",
+          "agg": "sum"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "HORIZONTAL_BAR",
+      "chartConfig": {
+        "row_limit": 20,
+        "type": "HORIZONTAL_BAR"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt15zcrb000amu07spmwdxoh"
+    },
+    {
+      "id": "cmt15zcr50008mu07bw73rvx4",
+      "createdAt": "2026-08-20T06:53:31.601Z",
+      "updatedAt": "2026-08-20T06:53:31.601Z",
+      "name": "Avg Tokens per Turn",
+      "description": "Average tokens per generation by environment.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "environment"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "totalTokens",
+          "agg": "avg"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "VERTICAL_BAR",
+      "chartConfig": {
+        "type": "VERTICAL_BAR"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt15zcr50008mu07bw73rvx4"
+    },
+    {
+      "id": "cmt15zcqw0006mu07rvoaymwh",
+      "createdAt": "2026-08-20T06:53:31.592Z",
+      "updatedAt": "2026-08-20T06:53:31.592Z",
+      "name": "Total Cost by Environment",
+      "description": "Sum of generation cost split by experiment environment.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "environment"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "totalCost",
+          "agg": "sum"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "VERTICAL_BAR",
+      "chartConfig": {
+        "type": "VERTICAL_BAR"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt15zcqw0006mu07rvoaymwh"
+    },
+    {
+      "id": "cmt0isqzg000jpd0736h8hpar",
+      "createdAt": "2026-08-19T20:04:32.283Z",
+      "updatedAt": "2026-08-19T20:04:32.283Z",
+      "name": "Top operations by input tokens",
+      "description": "LLM calls by name (invoke_agent, chat, execute_tool…) ranked by input tokens. The longest bar is where prompt tokens are going.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "name"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "inputTokens",
+          "agg": "sum"
+        }
+      ],
+      "filters": [],
+      "chartType": "HORIZONTAL_BAR",
+      "chartConfig": {
+        "row_limit": 20,
+        "type": "HORIZONTAL_BAR",
+        "show_value_labels": true
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0isqzg000jpd0736h8hpar"
+    },
+    {
+      "id": "cmt0isqzg000kpd07wdneuomf",
+      "createdAt": "2026-08-19T20:04:32.283Z",
+      "updatedAt": "2026-08-19T20:04:32.283Z",
+      "name": "File operations (tool × trace)",
+      "description": "Tool name × file path call counts. Shows which files are read/edited most frequently across the session.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "name"
+        },
+        {
+          "field": "traceName"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "count",
+          "agg": "count"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "TOOL",
+          "type": "string"
+        }
+      ],
+      "chartType": "PIVOT_TABLE",
+      "chartConfig": {
+        "row_limit": 30,
+        "type": "PIVOT_TABLE"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0isqzg000kpd07wdneuomf"
+    },
+    {
+      "id": "cmt0isqzg000lpd07u5nv5lfw",
+      "createdAt": "2026-08-19T20:04:32.283Z",
+      "updatedAt": "2026-08-19T20:04:32.283Z",
+      "name": "Cache behaviour per LLM operation",
+      "description": "Cache creation vs cache read per operation. The rows with large cache_creation numbers are where context rewrites happened — the real cost.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "name"
+        },
+        {
+          "field": "usageType"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "usageByType",
+          "agg": "sum"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "PIVOT_TABLE",
+      "chartConfig": {
+        "row_limit": 20,
+        "type": "PIVOT_TABLE"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0isqzg000lpd07u5nv5lfw"
+    },
+    {
+      "id": "cmt0isqzg000mpd070z6umdsl",
+      "createdAt": "2026-08-19T20:04:32.283Z",
+      "updatedAt": "2026-08-19T20:04:32.283Z",
+      "name": "Input tokens: model × operation",
+      "description": "Input tokens per model per operation name. Shows which model × operation combo burns the most context.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "providedModelName"
+        },
+        {
+          "field": "name"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "inputTokens",
+          "agg": "sum"
+        }
+      ],
+      "filters": [],
+      "chartType": "PIVOT_TABLE",
+      "chartConfig": {
+        "row_limit": 30,
+        "type": "PIVOT_TABLE"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0isqzg000mpd070z6umdsl"
+    },
+    {
+      "id": "cmt0hg2uu000tnq07xa3rpa57",
+      "createdAt": "2026-08-19T19:26:41.526Z",
+      "updatedAt": "2026-08-19T19:53:55.321Z",
+      "name": "Tokens by workspace (model mix)",
+      "description": "Model mix by token volume. Cheap models doing the heavy lifting is the goal.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "environment"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "totalTokens",
+          "agg": "sum"
+        }
+      ],
+      "filters": [],
+      "chartType": "PIE",
+      "chartConfig": {
+        "row_limit": 10,
+        "type": "PIE"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hg2uu000tnq07xa3rpa57"
+    },
+    {
+      "id": "cmt0if3hh0008pd07w7vy0bag",
+      "createdAt": "2026-08-19T19:53:55.301Z",
+      "updatedAt": "2026-08-19T19:53:55.301Z",
+      "name": "Top tools by workspace",
+      "description": "Tool call counts per workspace. High read_file/run_in_terminal values predict context bloat.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "environment"
+        },
+        {
+          "field": "name"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "count",
+          "agg": "count"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "TOOL",
+          "type": "string"
+        }
+      ],
+      "chartType": "PIVOT_TABLE",
+      "chartConfig": {
+        "row_limit": 20,
+        "type": "PIVOT_TABLE"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0if3hh0008pd07w7vy0bag"
+    },
+    {
+      "id": "cmt0ieyrq0005pd07nf2cl9u8",
+      "createdAt": "2026-08-19T19:53:49.190Z",
+      "updatedAt": "2026-08-19T19:53:49.190Z",
+      "name": "Calls over time by workspace",
+      "description": "LLM calls over time stacked by workspace. Shows when each workspace was active.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "environment"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "count",
+          "agg": "count"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "BAR_TIME_SERIES",
+      "chartConfig": {
+        "type": "BAR_TIME_SERIES"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0ieyrq0005pd07nf2cl9u8"
+    },
+    {
+      "id": "cmt0hfj4u000cnq07dtm1zq1x",
+      "createdAt": "2026-08-19T19:26:15.967Z",
+      "updatedAt": "2026-08-19T19:53:41.174Z",
+      "name": "Tokens by workspace",
+      "description": "Input token volume by workspace. The longest bar is where most of the spend came from.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "environment"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "inputTokens",
+          "agg": "sum"
+        }
+      ],
+      "filters": [],
+      "chartType": "HORIZONTAL_BAR",
+      "chartConfig": {
+        "row_limit": 20,
+        "type": "HORIZONTAL_BAR",
+        "show_value_labels": true
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hfj4u000cnq07dtm1zq1x"
+    },
+    {
+      "id": "cmt0hfj4b0008nq076949bj72",
+      "createdAt": "2026-08-19T19:26:15.946Z",
+      "updatedAt": "2026-08-19T19:53:41.169Z",
+      "name": "Workspace × usage type",
+      "description": "The money table grouped by workspace. input_cache_creation (~1.25x) is the real spend; input_cached_tokens (~0.1x) is cheap.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "environment"
+        },
+        {
+          "field": "usageType"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "usageByType",
+          "agg": "sum"
+        }
+      ],
+      "filters": [],
+      "chartType": "PIVOT_TABLE",
+      "chartConfig": {
+        "row_limit": 20,
+        "type": "PIVOT_TABLE"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hfj4b0008nq076949bj72"
+    },
+    {
+      "id": "cmt0hg2vr000znq07vwmxsli4",
+      "createdAt": "2026-08-19T19:26:41.558Z",
+      "updatedAt": "2026-08-19T19:26:41.558Z",
+      "name": "Calls over time by model",
+      "description": "LLM round-trips over time, split by model.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "providedModelName"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "count",
+          "agg": "count"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "LINE_TIME_SERIES",
+      "chartConfig": {
+        "type": "LINE_TIME_SERIES"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hg2vr000znq07vwmxsli4"
+    },
+    {
+      "id": "cmt0hg2vr0010nq07vdlvx3al",
+      "createdAt": "2026-08-19T19:26:41.558Z",
+      "updatedAt": "2026-08-19T19:26:41.558Z",
+      "name": "p95 latency by model",
+      "description": "p95 end-to-end latency per model. Large contexts show up here as slow calls.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "providedModelName"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "latency",
+          "agg": "p95"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "VERTICAL_BAR",
+      "chartConfig": {
+        "row_limit": 10,
+        "type": "VERTICAL_BAR"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hg2vr0010nq07vdlvx3al"
+    },
+    {
+      "id": "cmt0hg2vq000ynq07wiugo8w9",
+      "createdAt": "2026-08-19T19:26:41.558Z",
+      "updatedAt": "2026-08-19T19:26:41.558Z",
+      "name": "Top tools",
+      "description": "Which tools the agent actually reaches for. Heavy read_file/run_in_terminal usage predicts context bloat.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "name"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "count",
+          "agg": "count"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "TOOL",
+          "type": "string"
+        }
+      ],
+      "chartType": "HORIZONTAL_BAR",
+      "chartConfig": {
+        "row_limit": 15,
+        "type": "HORIZONTAL_BAR",
+        "show_value_labels": true
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hg2vq000ynq07wiugo8w9"
+    },
+    {
+      "id": "cmt0hfsbp000nnq078nrg06ao",
+      "createdAt": "2026-08-19T19:26:27.878Z",
+      "updatedAt": "2026-08-19T19:26:27.878Z",
+      "name": "Sessions",
+      "description": "Distinct chat sessions seen in the selected range.",
+      "view": "observations",
+      "dimensions": [],
+      "metrics": [
+        {
+          "measure": "uniqueSessionIds",
+          "agg": "uniq"
+        }
+      ],
+      "filters": [],
+      "chartType": "NUMBER",
+      "chartConfig": {
+        "type": "NUMBER"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hfsbp000nnq078nrg06ao"
+    },
+    {
+      "id": "cmt0hfsbn000knq07ypn6ns50",
+      "createdAt": "2026-08-19T19:26:27.875Z",
+      "updatedAt": "2026-08-19T19:26:27.875Z",
+      "name": "LLM calls",
+      "description": "Number of LLM round-trips.",
+      "view": "observations",
+      "dimensions": [],
+      "metrics": [
+        {
+          "measure": "count",
+          "agg": "count"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "GENERATION",
+          "type": "string"
+        }
+      ],
+      "chartType": "NUMBER",
+      "chartConfig": {
+        "type": "NUMBER"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hfsbn000knq07ypn6ns50"
+    },
+    {
+      "id": "cmt0hfsbn000lnq07asszpz9v",
+      "createdAt": "2026-08-19T19:26:27.875Z",
+      "updatedAt": "2026-08-19T19:26:27.875Z",
+      "name": "Tool calls",
+      "description": "Number of tool invocations.",
+      "view": "observations",
+      "dimensions": [],
+      "metrics": [
+        {
+          "measure": "count",
+          "agg": "count"
+        }
+      ],
+      "filters": [
+        {
+          "column": "type",
+          "operator": "=",
+          "value": "TOOL",
+          "type": "string"
+        }
+      ],
+      "chartType": "NUMBER",
+      "chartConfig": {
+        "type": "NUMBER"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hfsbn000lnq07asszpz9v"
+    },
+    {
+      "id": "cmt0hfsb5000hnq072tc9blr7",
+      "createdAt": "2026-08-19T19:26:27.858Z",
+      "updatedAt": "2026-08-19T19:26:27.858Z",
+      "name": "Input tokens",
+      "description": "Total input tokens across all LLM calls in the selected range.",
+      "view": "observations",
+      "dimensions": [],
+      "metrics": [
+        {
+          "measure": "inputTokens",
+          "agg": "sum"
+        }
+      ],
+      "filters": [],
+      "chartType": "NUMBER",
+      "chartConfig": {
+        "type": "NUMBER"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hfsb5000hnq072tc9blr7"
+    },
+    {
+      "id": "cmt0hfj4l000anq07dk9m8i7a",
+      "createdAt": "2026-08-19T19:26:15.957Z",
+      "updatedAt": "2026-08-19T19:26:15.957Z",
+      "name": "Token burn by usage type",
+      "description": "Cache creation vs cache read vs fresh input over time. Spikes in cache_creation are cache misses.",
+      "view": "observations",
+      "dimensions": [
+        {
+          "field": "usageType"
+        }
+      ],
+      "metrics": [
+        {
+          "measure": "usageByType",
+          "agg": "sum"
+        }
+      ],
+      "filters": [],
+      "chartType": "BAR_TIME_SERIES",
+      "chartConfig": {
+        "type": "BAR_TIME_SERIES"
+      },
+      "url": "http://langfuse.localhost/project/vscode/widgets/cmt0hfj4l000anq07dk9m8i7a"
+    }
+  ]
+}

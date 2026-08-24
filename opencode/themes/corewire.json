@@ -1,0 +1,225 @@
+{
+  "defs": {
+    "cw-dark": "#373a3b",
+    "cw-light": "#efeeee",
+    "cw-orange": "#f9b233",
+    "cw-blue": "#1d71b8",
+    "cw-gray": "#424d4d",
+    "cw-panel-dark": "#2c2f30",
+    "cw-element-dark": "#424d4d",
+    "cw-muted-dark": "#8a9192",
+    "cw-border-dark": "#4a5051",
+    "cw-panel-light": "#e4e3e3",
+    "cw-element-light": "#d8d7d7",
+    "cw-muted-light": "#6b7273",
+    "cw-border-light": "#c4c3c3",
+    "cw-error": "#c44536",
+    "cw-success": "#3d8b6e",
+    "cw-diff-added-bg-dark": "#2a3d36",
+    "cw-diff-removed-bg-dark": "#3d2c2a",
+    "cw-diff-added-bg-light": "#d5e8df",
+    "cw-diff-removed-bg-light": "#f0d6d3"
+  },
+  "theme": {
+    "primary": {
+      "dark": "cw-blue",
+      "light": "cw-blue"
+    },
+    "secondary": {
+      "dark": "cw-gray",
+      "light": "cw-gray"
+    },
+    "accent": {
+      "dark": "cw-orange",
+      "light": "cw-orange"
+    },
+    "error": {
+      "dark": "cw-error",
+      "light": "cw-error"
+    },
+    "warning": {
+      "dark": "cw-orange",
+      "light": "cw-orange"
+    },
+    "success": {
+      "dark": "cw-success",
+      "light": "cw-success"
+    },
+    "info": {
+      "dark": "cw-blue",
+      "light": "cw-blue"
+    },
+    "text": {
+      "dark": "cw-light",
+      "light": "cw-dark"
+    },
+    "textMuted": {
+      "dark": "cw-muted-dark",
+      "light": "cw-muted-light"
+    },
+    "background": {
+      "dark": "cw-dark",
+      "light": "cw-light"
+    },
+    "backgroundPanel": {
+      "dark": "cw-panel-dark",
+      "light": "cw-panel-light"
+    },
+    "backgroundElement": {
+      "dark": "cw-element-dark",
+      "light": "cw-element-light"
+    },
+    "border": {
+      "dark": "cw-border-dark",
+      "light": "cw-border-light"
+    },
+    "borderActive": {
+      "dark": "cw-orange",
+      "light": "cw-blue"
+    },
+    "borderSubtle": {
+      "dark": "cw-gray",
+      "light": "cw-border-light"
+    },
+    "diffAdded": {
+      "dark": "cw-success",
+      "light": "cw-success"
+    },
+    "diffRemoved": {
+      "dark": "cw-error",
+      "light": "cw-error"
+    },
+    "diffContext": {
+      "dark": "cw-muted-dark",
+      "light": "cw-muted-light"
+    },
+    "diffHunkHeader": {
+      "dark": "cw-blue",
+      "light": "cw-blue"
+    },
+    "diffHighlightAdded": {
+      "dark": "cw-success",
+      "light": "cw-success"
+    },
+    "diffHighlightRemoved": {
+      "dark": "cw-error",
+      "light": "cw-error"
+    },
+    "diffAddedBg": {
+      "dark": "cw-diff-added-bg-dark",
+      "light": "cw-diff-added-bg-light"
+    },
+    "diffRemovedBg": {
+      "dark": "cw-diff-removed-bg-dark",
+      "light": "cw-diff-removed-bg-light"
+    },
+    "diffContextBg": {
+      "dark": "cw-panel-dark",
+      "light": "cw-panel-light"
+    },
+    "diffLineNumber": {
+      "dark": "cw-muted-dark",
+      "light": "cw-muted-light"
+    },
+    "diffAddedLineNumberBg": {
+      "dark": "cw-diff-added-bg-dark",
+      "light": "cw-diff-added-bg-light"
+    },
+    "diffRemovedLineNumberBg": {
+      "dark": "cw-diff-removed-bg-dark",
+      "light": "cw-diff-removed-bg-light"
+    },
+    "markdownText": {
+      "dark": "cw-light",
+      "light": "cw-dark"
+    },
+    "markdownHeading": {
+      "dark": "cw-orange",
+      "light": "cw-blue"
+    },
+    "markdownLink": {
+      "dark": "cw-blue",
+      "light": "cw-blue"
+    },
+    "markdownLinkText": {
+      "dark": "cw-orange",
+      "light": "cw-blue"
+    },
+    "markdownCode": {
+      "dark": "cw-orange",
+      "light": "cw-blue"
+    },
+    "markdownBlockQuote": {
+      "dark": "cw-muted-dark",
+      "light": "cw-muted-light"
+    },
+    "markdownEmph": {
+      "dark": "cw-orange",
+      "light": "cw-orange"
+    },
+    "markdownStrong": {
+      "dark": "cw-orange",
+      "light": "cw-blue"
+    },
+    "markdownHorizontalRule": {
+      "dark": "cw-gray",
+      "light": "cw-border-light"
+    },
+    "markdownListItem": {
+      "dark": "cw-blue",
+      "light": "cw-blue"
+    },
+    "markdownListEnumeration": {
+      "dark": "cw-orange",
+      "light": "cw-orange"
+    },
+    "markdownImage": {
+      "dark": "cw-blue",
+      "light": "cw-blue"
+    },
+    "markdownImageText": {
+      "dark": "cw-orange",
+      "light": "cw-blue"
+    },
+    "markdownCodeBlock": {
+      "dark": "cw-light",
+      "light": "cw-dark"
+    },
+    "syntaxComment": {
+      "dark": "cw-muted-dark",
+      "light": "cw-muted-light"
+    },
+    "syntaxKeyword": {
+      "dark": "cw-blue",
+      "light": "cw-blue"
+    },
+    "syntaxFunction": {
+      "dark": "cw-orange",
+      "light": "cw-blue"
+    },
+    "syntaxVariable": {
+      "dark": "cw-light",
+      "light": "cw-dark"
+    },
+    "syntaxString": {
+      "dark": "cw-orange",
+      "light": "cw-orange"
+    },
+    "syntaxNumber": {
+      "dark": "cw-orange",
+      "light": "cw-orange"
+    },
+    "syntaxType": {
+      "dark": "cw-blue",
+      "light": "cw-blue"
+    },
+    "syntaxOperator": {
+      "dark": "cw-muted-dark",
+      "light": "cw-muted-light"
+    },
+    "syntaxPunctuation": {
+      "dark": "cw-light",
+      "light": "cw-dark"
+    }
+  }
+}

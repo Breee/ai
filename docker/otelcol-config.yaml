@@ -1,0 +1,48 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: "0.0.0.0:4318"
+
+processors:
+  transform/enrich:
+    trace_statements:
+      - context: resource
+        statements:
+          - set(attributes["deployment.environment.name"], "localstack") where attributes["deployment.environment.name"] == nil
+      - context: span
+        statements:
+          - set(attributes["deployment.environment.name"], resource.attributes["deployment.environment.name"]) where attributes["deployment.environment.name"] == nil and resource.attributes["deployment.environment.name"] != nil
+          # Keep the workspace label in span metadata too for easier filtering.
+          - set(attributes["langfuse.trace.metadata.workspace"], resource.attributes["deployment.environment.name"]) where resource.attributes["deployment.environment.name"] != nil
+          - set(attributes["langfuse.trace.metadata.git_branch"], attributes["github.copilot.git.branch"]) where attributes["github.copilot.git.branch"] != nil
+          - set(attributes["langfuse.trace.metadata.git_repo"], attributes["github.copilot.git.repository"]) where attributes["github.copilot.git.repository"] != nil
+          # Tags stay low-cardinality and useful: repo, operation, model.
+          - set(attributes["langfuse.trace.tags"], [attributes["github.copilot.git.repository"], attributes["gen_ai.operation.name"], attributes["gen_ai.request.model"]]) where attributes["github.copilot.git.repository"] != nil
+          - set(attributes["langfuse.trace.tags"], [attributes["gen_ai.operation.name"], attributes["gen_ai.request.model"]]) where attributes["github.copilot.git.repository"] == nil
+          - set(attributes["langfuse.trace.metadata.session_id"], attributes["copilot_chat.session_id"]) where attributes["copilot_chat.session_id"] != nil
+          - set(attributes["langfuse.trace.metadata.chat_session_id"], attributes["copilot_chat.chat_session_id"]) where attributes["copilot_chat.chat_session_id"] != nil
+          - set(attributes["langfuse.trace.metadata.operation"], attributes["gen_ai.operation.name"]) where attributes["gen_ai.operation.name"] != nil
+          - set(attributes["langfuse.trace.metadata.model"], attributes["gen_ai.request.model"]) where attributes["gen_ai.request.model"] != nil
+          - set(attributes["langfuse.observation.metadata.operation"], attributes["gen_ai.operation.name"]) where attributes["gen_ai.operation.name"] != nil
+          - set(attributes["langfuse.observation.metadata.model"], attributes["gen_ai.request.model"]) where attributes["gen_ai.request.model"] != nil
+          # file_path on tool spans → filterable observation metadata
+          - set(attributes["langfuse.observation.metadata.file_path"], attributes["github.copilot.tool.parameters.file_path"]) where attributes["github.copilot.tool.parameters.file_path"] != nil
+  batch:
+    timeout: 2s
+
+exporters:
+  otlphttp/langfuse:
+    endpoint: "http://langfuse-web:3000/api/public/otel"
+    headers:
+      Authorization: "Basic cGstbGYtdnNjb2RlLWxvY2FsOnNrLWxmLXZzY29kZS1sb2NhbA=="
+#  file/raw:
+#    path: /raw/otel-raw-traces.jsonl
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [transform/enrich, batch]
+      exporters: [otlphttp/langfuse]
+#      exporters: [otlphttp/langfuse, file/raw]
