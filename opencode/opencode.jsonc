@@ -6,6 +6,34 @@
     "explore": {
       "model": "github-copilot/mai-code-1.1-flash",
     },
+    "general": {
+      "model": "github-copilot/grok-4.6",
+    },
+    "browser": {
+      "tools": {
+        "playwright*": true,
+      },
+    },
+  },
+  "mcp": {
+    "mastery": {
+      "type": "local",
+      "command": ["python3", "tools/mastery-mcp/server.py"],
+      "enabled": true,
+      "environment": {
+        "MASTERY_API": "http://localhost:8090",
+        "MASTERY_KUBE_CONTEXT": "kind-mastery-dev",
+        "MASTERY_MAILPIT": "http://localhost:8025",
+      },
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp"],
+      "enabled": false,
+    },
+  },
+  "tools": {
+    "playwright*": false,
   },
   "skills": {
     "paths": [
