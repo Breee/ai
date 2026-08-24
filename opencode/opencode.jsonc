@@ -10,35 +10,36 @@
       "environment": {
         "MASTERY_API": "http://localhost:8090",
         "MASTERY_KUBE_CONTEXT": "kind-mastery-dev",
-        "MASTERY_MAILPIT": "http://localhost:8025",
-      },
+        "MASTERY_MAILPIT": "http://localhost:8025"
+      }
     },
     "playwright": {
       "type": "local",
       "command": ["npx", "-y", "@playwright/mcp"],
-      "enabled": false,
-    },
+      "enabled": false
+    }
   },
   "tools": {
-    "playwright*": false,
+    "playwright*": false
   },
   "skills": {
     "paths": [
       "~/repos/github.com/Breee/ai/opencode/skills",
-      "~/repos/github.com/Breee/ai/skills",
-    ],
+      "~/repos/github.com/Breee/ai/skills"
+    ]
   },
   "references": {
     "opencode": {
       "path": "~/repos/github.com/Breee/ai/opencode",
-      "description": "Personal opencode config, docs, agents, commands, and skills. Use for how this machine's opencode is set up.",
+      "description": "Personal opencode config, docs, agents, commands, and skills. Use for how this machine's opencode is set up."
     },
     "docs": {
       "path": "~/repos/github.com/Breee/ai/opencode/docs",
-      "description": "Personal opencode documentation and conventions.",
-    },
+      "description": "Personal opencode documentation and conventions."
+    }
   },
   "plugin": [
     "@tarquinen/opencode-dcp@latest"
-  ],
+  ]
 }
+

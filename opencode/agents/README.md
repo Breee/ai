@@ -1,5 +1,5 @@
 # Agents
 
-This directory contains markdown-based agent definitions for opencode.
+This directory contains reusable, general-purpose agent definitions for OpenCode.
 
-Files here are versioned in the repo and kept alongside the runtime config.
+These defaults are intentionally project-neutral so they can be shared across repos without tying the setup to one codebase.
