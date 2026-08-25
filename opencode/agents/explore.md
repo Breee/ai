@@ -1,7 +1,7 @@
 ---
 description: "Fast, read-only exploration for understanding a codebase or config quickly."
 mode: subagent
-model: github-copilot/mai-code-1.1-flash
+model: groq/llama-3.3-70b-versatile
 permission:
   edit: deny
   bash: deny

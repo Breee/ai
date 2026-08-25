@@ -1,7 +1,46 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "instructions": ["~/repos/github.com/Breee/ai/opencode/AGENTS.md"],
+  "model": "github-copilot/grok-4.6",
   "small_model": "github-copilot/mai-code-1.1-flash",
+
+  "provider": {
+    "openrouter": {
+      "options": {
+        "apiKey": "{env:OPENROUTER_API_KEY}"
+      }
+    },
+    "groq": {
+      "options": {
+        "apiKey": "{env:GROQ_API_KEY}"
+      }
+    }
+  },
+
+  "agent": {
+    "explore": {
+      "model": "groq/llama-3.3-70b-versatile",
+      "fallback_models": [
+        "openrouter/google/gemma-4-31b-it:free",
+        "github-copilot/mai-code-1.1-flash"
+      ]
+    },
+    "general": {
+      "model": "openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+      "fallback_models": [
+        "groq/llama-3.3-70b-versatile",
+        "github-copilot/grok-4.6"
+      ]
+    },
+    "browser": {
+      "model": "openrouter/poolside/laguna-xs-2.1:free",
+      "fallback_models": [
+        "groq/llama-3.1-8b-instant",
+        "github-copilot/mai-code-1.1-flash"
+      ]
+    }
+  },
+
   "mcp": {
     "mastery": {
       "type": "local",
@@ -39,7 +78,10 @@
     }
   },
   "plugin": [
-    "@tarquinen/opencode-dcp@latest"
+    "@tarquinen/opencode-dcp@latest",
+    "opencode-free-fleet",
+    "opencode-runtime-fallback",
+    "opencode-task-router"
   ]
 }
 

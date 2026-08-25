@@ -1,7 +1,7 @@
 ---
 description: "General-purpose coding agent for repo work, fixes, and implementation tasks."
 mode: subagent
-model: github-copilot/grok-4.6
+model: openrouter/nvidia/nemotron-3-super-120b-a12b:free
 permission:
   edit: allow
   bash: allow

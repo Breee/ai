@@ -1,7 +1,7 @@
 ---
 description: "UI and web interaction agent for browser-based validation and debugging."
 mode: subagent
-model: github-copilot/grok-4.6
+model: openrouter/poolside/laguna-xs-2.1:free
 permission:
   edit: deny
   bash: deny
