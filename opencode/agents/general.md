@@ -1,7 +1,7 @@
 ---
 description: "General-purpose coding agent for repo work, fixes, and implementation tasks."
 mode: subagent
-model: openrouter/nvidia/nemotron-3-super-120b-a12b:free
+model: opencode/mimo-v2.5-free
 permission:
   edit: allow
   bash: allow

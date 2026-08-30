@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+# vault-read: Fetch secrets from OpenBao using the cached plugin token.
+#
+# Usage:
+#   vault-read <path>              # dump all keys
+#   vault-read <path> <key>        # single key
+#   vault-read <path> <key> = VAR  # export as env var
+#   vault-read export <path> [key] # print as VAR=value lines
+#
+# Environment:
+#   OPENBAO_ADDR     Override address (default: http://127.0.0.1:8200)
+#   OPENBAO_AGENT    Agent name for AppRole auth (default: general)
+#   OPENBAO_ROLE_ID  Override AppRole role_id
+#   OPENBAO_SECRET_ID Override AppRole secret_id
+
+set -euo pipefail
+
+ADDR="${OPENBAO_ADDR:-http://127.0.0.1:8200}"
+TOKEN="${VAULT_TOKEN:-}"
+
+# ---- Helpers ----
+
+die() { echo "vault-read: $*" >&2; exit 1; }
+
+get_token() {
+  [ -n "$TOKEN" ] || die "VAULT_TOKEN not set. Run: export VAULT_TOKEN=<token>"
+  echo "$TOKEN"
+}
+
+bao_get() {
+  local token resp
+  token=$(get_cached_token)
+  resp=$(curl -s -w "\n%{http_code}" -H "X-Vault-Token: $token" "$ADDR/v1/secret/data/$1")
+  local http_code=$(echo "$resp" | tail -1)
+  local body=$(echo "$resp" | sed '$d')
+  if [ "$http_code" -ge 400 ]; then
+    local err=$(echo "$body" | jq -r '.errors[0] // "HTTP \($http_code)"' 2>/dev/null || echo "HTTP $http_code")
+    die "$err"
+  fi
+  echo "$body"
+}
+
+bao_list() {
+  local token resp
+  token=$(get_cached_token)
+  resp=$(curl -s -w "\n%{http_code}" -X LIST -H "X-Vault-Token: $token" "$ADDR/v1/secret/metadata/$1")
+  local http_code=$(echo "$resp" | tail -1)
+  local body=$(echo "$resp" | sed '$d')
+  if [ "$http_code" -ge 400 ]; then
+    local err=$(echo "$body" | jq -r '.errors[0] // "HTTP \($http_code)"' 2>/dev/null || echo "HTTP $http_code")
+    die "$err"
+  fi
+  echo "$body"
+}
+
+# ---- Commands ----
+
+cmd_read() {
+  local path="${1:-}" key="${2:-}"
+  [ -n "$path" ] || die "Usage: vault-read <path> [key]"
+  local data
+  data=$(bao_get "$path")
+  if [ -n "$key" ]; then
+    local val
+    val=$(echo "$data" | jq -r ".data.data.\"$key\" // empty")
+    [ -n "$val" ] || die "Key '$key' not found at $path"
+    echo "$val"
+  else
+    echo "$data" | jq -r '.data.data | to_entries[] | "\(.key) = \(.value)"'
+  fi
+}
+
+cmd_export() {
+  local path="${1:-}" key="${2:-}"
+  [ -n "$path" ] || die "Usage: vault-read export <path> [key]"
+  local data
+  data=$(bao_get "$path")
+  if [ -n "$key" ]; then
+    local val var
+    val=$(echo "$data" | jq -r ".data.data.\"$key\" // empty")
+    var=$(echo "$key" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
+    [ -n "$val" ] || die "Key '$key' not found at $path"
+    echo "export $var=$val"
+  else
+    echo "$data" | jq -r '.data.data | to_entries[] | "export \(.key | ascii_upcase | gsub("-";"_"))=\(.value)"'
+  fi
+}
+
+cmd_list() {
+  local path="${1:-}"
+  [ -n "$path" ] || die "Usage: vault-read list <path>"
+  bao_list "$path" | jq -r '.data.keys[]'
+}
+
+cmd_status() {
+  if [ ! -f "$TOKEN_CACHE" ]; then
+    echo "Not authenticated"
+    return 1
+  fi
+  local token policies ttl issued_at age remaining
+  token=$(jq -r .token "$TOKEN_CACHE")
+  policies=$(jq -r '.policies | join(", ")' "$TOKEN_CACHE")
+  ttl=$(jq -r .ttl "$TOKEN_CACHE")
+  issued_at=$(jq -r .issuedAt "$TOKEN_CACHE")
+  age=$(( ($(date +%s)000 - issued_at) / 1000 ))
+  remaining=$(( ttl - age ))
+  echo "Agent:     $AGENT"
+  echo "Policies:  $policies"
+  echo "TTL:       ${remaining}s remaining (of ${ttl}s)"
+  echo "Address:   $ADDR"
+}
+
+# ---- Main ----
+
+case "${1:-help}" in
+  export)   shift; cmd_export "$@" ;;
+  list)     shift; cmd_list "$@" ;;
+  login)    login ;;
+  status)   cmd_status ;;
+  help|--help|-h)
+    cat <<'EOF'
+vault-read — Fetch secrets from OpenBao
+
+Usage:
+  vault-read <path>              Read all keys at path
+  vault-read <path> <key>        Read single key
+  vault-read export <path>       Print as export VAR=value
+  vault-read export <path> KEY   Export single key
+  vault-read list <path>         List keys at path
+  vault-read login               Re-authenticate
+  vault-read status              Show token info
+
+Environment:
+  OPENBAO_ADDR       Server address (default: http://127.0.0.1:8200)
+  OPENBAO_AGENT      Agent name (default: general)
+  OPENBAO_ROLE_ID    AppRole role_id (for login)
+  OPENBAO_SECRET_ID  AppRole secret_id (for login)
+
+Examples:
+  vault-read deploy/argocd
+  vault-read deploy/argocd api_key
+  eval $(vault-read export deploy/argocd api_key)
+  vault-read list deploy/
+EOF
+    ;;
+  *) cmd_read "$@" ;;
+esac

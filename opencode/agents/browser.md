@@ -1,7 +1,7 @@
 ---
 description: "UI and web interaction agent for browser-based validation and debugging."
 mode: subagent
-model: openrouter/poolside/laguna-xs-2.1:free
+model: opencode/nemotron-3.5-lightning-free
 permission:
   edit: deny
   bash: deny

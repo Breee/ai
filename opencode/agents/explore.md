@@ -1,7 +1,7 @@
 ---
 description: "Fast, read-only exploration for understanding a codebase or config quickly."
 mode: subagent
-model: groq/llama-3.3-70b-versatile
+model: opencode/nemotron-3.5-lightning-free
 permission:
   edit: deny
   bash: deny

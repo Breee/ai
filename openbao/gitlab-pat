@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# gitlab-pat: Read a GitLab PAT from K8s secret and export it.
+#
+# Usage:
+#   eval $(gitlab-pat reader)          # read-only token
+#   eval $(gitlab-pat writer)          # write token
+#   gitlab-pat reader 2>/dev/null      # just print the token
+#
+# Requires: kubectl access to ai-agents namespace.
+
+set -euo pipefail
+
+ROLE="${1:-reader}"
+NS="ai-agents"
+SECRET="gitlab-${ROLE}-pat"
+
+die() { echo "gitlab-pat: $*" >&2; exit 1; }
+
+case "$ROLE" in
+  reader|writer) ;;
+  *) die "Usage: gitlab-pat <reader|writer>" ;;
+esac
+
+PAT=$(kubectl get secret "$SECRET" -n "$NS" -o jsonpath='{.data.GITLAB_PAT}' | base64 -d)
+URL=$(kubectl get secret "$SECRET" -n "$NS" -o jsonpath='{.data.GITLAB_URL}' | base64 -d)
+
+echo "export GITLAB_PAT=$PAT"
+echo "export GITLAB_URL=$URL"
+echo "export GITLAB_TOKEN=$PAT"  # glab uses GITLAB_TOKEN

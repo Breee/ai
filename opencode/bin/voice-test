@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Quick voice test — speaks a phrase with each Piper voice
+set -euo pipefail
+
+VOICES_DIR="${HOME}/.local/share/piper"
+PHRASE="${1:-Pilot, contact with Harmon is confirmed. Enhance your calm.}"
+
+for model in "$VOICES_DIR"/*.onnx; do
+  [[ "$model" == *.json ]] && continue
+  name="$(basename "$model" .onnx)"
+  config="${model}.onnx"
+  [[ -f "$config" ]] || config="${model%.onnx}.onnx.json"
+  echo "--- $name ---"
+  echo "$PHRASE" | piper --model "$model" --config_file "$config" --output_file "/tmp/voice_test_${name}.wav" 2>/dev/null
+  aplay "/tmp/voice_test_${name}.wav" 2>/dev/null
+  rm -f "/tmp/voice_test_${name}.wav"
+done

@@ -1,0 +1,51 @@
+name: openbao
+
+services:
+  openbao:
+    image: openbao/openbao:latest
+    container_name: openbao
+    command: server -config=/openbao/config.hcl
+    cap_add:
+      - IPC_LOCK
+    networks:
+      - openbao
+      - proxy
+      - kind
+    environment:
+      VAULT_ADDR: http://127.0.0.1:8200
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.vault.rule=Host(`vault.localhost`)"
+      - "traefik.http.routers.vault.entrypoints=web"
+      - "traefik.http.services.vault.loadbalancer.server.port=8200"
+    volumes:
+      - openbao_data:/openbao/file
+      - ./config.hcl:/openbao/config.hcl:ro
+      - ./init.sh:/openbao/init.sh:ro
+      - ./policies:/openbao/policies:ro
+    healthcheck:
+      test: ["CMD", "vault", "status", "-format=json"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 3s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 128M
+        reservations:
+          cpus: "0.1"
+          memory: 64M
+    restart: unless-stopped
+
+networks:
+  openbao:
+  proxy:
+    external: true
+  kind:
+    external: true
+
+volumes:
+  openbao_data:

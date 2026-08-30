@@ -1,0 +1,8 @@
+{
+  "name": "opencode-openbao",
+  "version": "0.1.0",
+  "description": "OpenBao secrets bridge for OpenCode agents",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {}
+}

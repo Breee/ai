@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# k8s-token: Generate short-lived ServiceAccount tokens for AI agents.
+#
+# Usage:
+#   k8s-token readonly           # 1h token for readonly SA
+#   k8s-token k8s-readonly 10m   # 10m token for k8s-readonly SA
+#   k8s-token readonly env       # print as K8S_TOKEN=...
+#   k8s-token readonly decode    # decode a k8s secret's token field
+#
+# The token is valid against the K8s API server and scoped by RBAC.
+# This simulates projected service account tokens in a pod.
+
+set -euo pipefail
+
+SA="${1:-}"
+DURATION="${2:-1h}"
+FORMAT="${3:-raw}"
+NAMESPACE="ai-agents"
+CLUSTER_NAME="${K8S_CLUSTER:-kind-mastery-dev}"
+
+die() { echo "k8s-token: $*" >&2; exit 1; }
+
+[ -n "$SA" ] || die "Usage: k8s-token <sa-name> [duration] [raw|env|decode]"
+
+# Verify SA exists
+kubectl get sa "$SA" -n "$NAMESPACE" >/dev/null 2>&1 \
+  || die "ServiceAccount '$SA' not found in namespace $NAMESPACE"
+
+case "$FORMAT" in
+  raw)
+    kubectl create token "$SA" \
+      -n "$NAMESPACE" \
+      --duration="$DURATION" \
+      --kubeconfig="$HOME/.kube/config" \
+      --cluster="$CLUSTER_NAME"
+    ;;
+  env)
+    TOKEN=$(kubectl create token "$SA" \
+      -n "$NAMESPACE" \
+      --duration="$DURATION" \
+      --kubeconfig="$HOME/.kube/config" \
+      --cluster="$CLUSTER_NAME")
+    echo "export K8S_SA_TOKEN=$TOKEN"
+    echo "export K8S_SA_NAME=$SA"
+    echo "export K8S_SA_NAMESPACE=$NAMESPACE"
+    ;;
+  decode)
+    # Decode a k8s secret's token (for debugging projected tokens)
+    SECRET_NAME="${2:-}"
+    [ -n "$SECRET_NAME" ] || die "Usage: k8s-token <sa> decode <secret-name>"
+    kubectl get secret "$SECRET_NAME" -n "$NAMESPACE" \
+      -o jsonpath='{.data.token}' | base64 -d
+    echo
+    ;;
+  *)
+    die "Unknown format: $FORMAT (use raw, env, or decode)"
+    ;;
+esac

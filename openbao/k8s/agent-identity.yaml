@@ -1,0 +1,155 @@
+---
+# ============================================================
+# Agent identities — one ServiceAccount per role
+# ============================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-agents
+  labels:
+    app.kubernetes.io/part-of: opencode-agents
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: reader
+  namespace: ai-agents
+  labels:
+    app.kubernetes.io/component: agent-identity
+automountServiceAccountToken: true
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gitlab-writer
+  namespace: ai-agents
+  labels:
+    app.kubernetes.io/component: agent-identity
+automountServiceAccountToken: true
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: k8s-writer
+  namespace: ai-agents
+  labels:
+    app.kubernetes.io/component: agent-identity
+automountServiceAccountToken: true
+---
+# ============================================================
+# RBAC: reader — read-only K8s (no GitLab)
+# ============================================================
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: reader
+  namespace: ai-agents
+rules:
+  - apiGroups: [""]
+    resources: ["secrets", "configmaps", "pods", "services", "endpoints"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: reader
+  namespace: ai-agents
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: reader
+subjects:
+  - kind: ServiceAccount
+    name: reader
+    namespace: ai-agents
+---
+# ============================================================
+# RBAC: k8s-writer — write in allowed namespaces
+# ============================================================
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: writer
+  namespace: ai-agents
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "configmaps", "secrets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets", "daemonsets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["pods/log", "pods/exec"]
+    verbs: ["get", "create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: writer
+  namespace: ai-agents
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: writer
+subjects:
+  - kind: ServiceAccount
+    name: k8s-writer
+    namespace: ai-agents
+---
+# Also allow k8s-writer in staging namespace (create if needed)
+# Uncomment when staging namespace exists:
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: Role
+# metadata:
+#   name: writer
+#   namespace: staging
+# rules: [... same as above ...]
+# ---
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: RoleBinding
+# metadata:
+#   name: writer
+#   namespace: staging
+# roleRef: [...]
+# subjects: [k8s-writer in ai-agents]
+---
+# ============================================================
+# RBAC: gitlab-writer — NO K8s access at all
+# (identity only, GitLab is via PAT)
+# ============================================================
+# No K8s RBAC needed — this SA exists purely so the agent
+# has a verifiable identity. GitLab access is via PAT.
+---
+# ============================================================
+# Secrets: GitLab PATs (one per agent that needs GitLab)
+# ============================================================
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitlab-reader-pat
+  namespace: ai-agents
+  labels:
+    app.kubernetes.io/component: agent-credentials
+type: Opaque
+stringData:
+  # Create a read-only PAT at GitLab > User > Access Tokens
+  # Scope: read_api, read_repository
+  GITLAB_PAT: "glpat-REPLACE-ME"
+  GITLAB_URL: "https://gitlab.example.com"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitlab-writer-pat
+  namespace: ai-agents
+  labels:
+    app.kubernetes.io/component: agent-credentials
+type: Opaque
+stringData:
+  # Create a write PAT at GitLab > User > Access Tokens
+  # Scope: api, write_repository
+  GITLAB_PAT: "glpat-REPLACE-ME"
+  GITLAB_URL: "https://gitlab.example.com"
