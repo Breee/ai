@@ -1,7 +1,19 @@
 {
   "$schema": "https://opencode.ai/tui.json",
   "theme": "corewire",
+  "keybinds": {
+    "session_rename": "none"
+  },
   "plugin": [
-    "@tarquinen/opencode-dcp@latest"
-  ],
+    "@tarquinen/opencode-dcp@latest",
+    ["file:///home/bree/.config/opencode/plugins/opencode-voice", {
+      "endpoint": "http://localhost:11434/v1",
+      "model": "qwen2.5:3b",
+      "langfuse": {
+        "host": "http://langfuse.localhost",
+        "publicKey": "pk-lf-voice",
+        "secretKey": "sk-lf-voice-616e6757dc93c74317749653d1ce715af6fafc37fe53d863"
+      }
+    }]
+  ]
 }

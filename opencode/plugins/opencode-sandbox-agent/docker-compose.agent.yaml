@@ -1,0 +1,49 @@
+version: "3.8"
+
+# Sandboxed agent container — gVisor runtime, SPIRE identity, nono sandbox
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: opencode-agent-${AGENT_ID:-default}
+    hostname: agent-${AGENT_ID:-default}
+    environment:
+      - SPIRE_SERVER_ADDR=host.docker.internal:8081
+      - AGENT_ID=${AGENT_ID:-/agent/default}
+      - WORKSPACE=/workspace
+      - OPENCODE_ARGS=${OPENCODE_ARGS:-}
+    volumes:
+      - ${WORKSPACE:-.}:/workspace
+      - ./join-token:/run/spire/join-token:ro
+      - agent-tmp:/tmp
+    networks:
+      - agent-net
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+          pids: 256
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETUID
+      - SETGID
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:size=100M
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  agent-tmp:
+
+networks:
+  agent-net:
+    driver: bridge

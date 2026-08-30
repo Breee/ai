@@ -1,42 +1,37 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "instructions": ["~/repos/github.com/Breee/ai/opencode/AGENTS.md"],
-  "model": "github-copilot/grok-4.6",
-  "small_model": "github-copilot/mai-code-1.1-flash",
+  "model": "opencode/mimo-v2.5-free",
+  "small_model": "opencode/nemotron-3.5-lightning-free",
 
   "provider": {
     "openrouter": {
       "options": {
         "apiKey": "{env:OPENROUTER_API_KEY}"
       }
-    },
-    "groq": {
-      "options": {
-        "apiKey": "{env:GROQ_API_KEY}"
-      }
     }
   },
 
   "agent": {
     "explore": {
-      "model": "groq/llama-3.3-70b-versatile",
+      "model": "opencode/nemotron-3.5-lightning-free",
       "fallback_models": [
-        "openrouter/google/gemma-4-31b-it:free",
-        "github-copilot/mai-code-1.1-flash"
+        "opencode/north-mini-code-free",
+        "openrouter/cohere/north-mini-code:free"
       ]
     },
     "general": {
-      "model": "openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+      "model": "opencode/mimo-v2.5-free",
       "fallback_models": [
-        "groq/llama-3.3-70b-versatile",
-        "github-copilot/grok-4.6"
+        "opencode/nemotron-3-ultra-free",
+        "opencode/north-mini-code-free"
       ]
     },
     "browser": {
-      "model": "openrouter/poolside/laguna-xs-2.1:free",
+      "model": "opencode/nemotron-3.5-lightning-free",
       "fallback_models": [
-        "groq/llama-3.1-8b-instant",
-        "github-copilot/mai-code-1.1-flash"
+        "opencode/north-mini-code-free",
+        "openrouter/cohere/north-mini-code:free"
       ]
     }
   },
@@ -81,7 +76,8 @@
     "@tarquinen/opencode-dcp@latest",
     "opencode-free-fleet",
     "opencode-runtime-fallback",
-    "opencode-task-router"
+    "opencode-task-router",
+    "opencode-scheduler"
   ]
 }
 

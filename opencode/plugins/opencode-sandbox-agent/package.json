@@ -1,0 +1,8 @@
+{
+  "name": "opencode-sandbox-agent",
+  "version": "0.1.0",
+  "description": "Containerized agent with SPIRE identity + nono sandbox + gVisor runtime",
+  "type": "module",
+  "main": "index.js",
+  "keywords": ["opencode", "sandbox", "spiffe", "spire", "nono", "gvisor", "zero-trust"]
+}
