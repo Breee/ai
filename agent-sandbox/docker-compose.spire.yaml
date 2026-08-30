@@ -1,0 +1,13 @@
+version: "3.8"
+
+# SPIRE server — runs on host network, persists data
+services:
+  spire-server:
+    image: ghcr.io/spiffe/spire-server:${SPIRE_VERSION:-1.15.2}
+    container_name: spire-server
+    network_mode: host
+    volumes:
+      - /tmp/spire-data:/opt/spire/data
+      - ./spire-server.conf:/opt/spire/conf/server/server.conf:ro
+    entrypoint: ["/opt/spire/bin/spire-server", "run", "-config", "/opt/spire/conf/server/server.conf"]
+    restart: unless-stopped

@@ -1,0 +1,30 @@
+# Agent Identity Sandbox — SPIRE + OpenBao + nono
+# Reuses existing spire-server (running on host:8081).
+# Spins up fresh OpenBao for isolated testing.
+
+services:
+  # ─── OpenBao (fresh instance for testing) ──────────────────
+  openbao:
+    image: openbao/openbao:latest
+    container_name: sandbox-openbao
+    ports:
+      - "127.0.0.1:8201:8200"
+    environment:
+      - BAO_DEV_ROOT_TOKEN_ID=sandbox-root-token
+      - BAO_API_ADDR=http://127.0.0.1:8200
+    volumes:
+      - openbao-data:/openbao/file
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://127.0.0.1:8200/v1/sys/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  openbao-data:
