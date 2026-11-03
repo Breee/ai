@@ -1,0 +1,108 @@
+# K8s Resource Protection
+# Apply: kubectl apply -f k8s-protection.yaml
+
+# Default limits for ANY container without explicit limits
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: system-default-limits
+  namespace: ai-agents
+spec:
+  limits:
+  - type: Container
+    default:
+      cpu: "1"
+      memory: 512Mi
+    defaultRequest:
+      cpu: 50m
+      memory: 64Mi
+    max:
+      cpu: "4"
+      memory: 2Gi
+    min:
+      cpu: 10m
+      memory: 16Mi
+---
+# Hard ceiling per namespace
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: system-hard-limits
+  namespace: ai-agents
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 4Gi
+    limits.cpu: "8"
+    limits.memory: 8Gi
+    pods: "30"
+    services: "10"
+    persistentvolumeclaims: "5"
+---
+# Same protection for every existing namespace
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: system-default-limits
+  namespace: mastery
+spec:
+  limits:
+  - type: Container
+    default:
+      cpu: "1"
+      memory: 512Mi
+    defaultRequest:
+      cpu: 50m
+      memory: 64Mi
+    max:
+      cpu: "4"
+      memory: 2Gi
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: system-hard-limits
+  namespace: mastery
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 4Gi
+    limits.cpu: "8"
+    limits.memory: 8Gi
+    pods: "20"
+---
+# Kyverno: enforce resource limits on ALL pods cluster-wide
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-resource-limits
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+  - name: check-container-resources
+    match:
+      any:
+      - resources:
+          kinds: ["Pod"]
+    validate:
+      message: "All containers must have CPU and memory limits. Requests are recommended."
+      pattern:
+        spec:
+          containers:
+          - resources:
+              limits:
+                memory: "?*"
+                cpu: "?*"
+  - name: block-privileged
+    match:
+      any:
+      - resources:
+          kinds: ["Pod"]
+    validate:
+      message: "Privileged containers are not allowed"
+      pattern:
+        spec:
+          containers:
+          - securityContext:
+              privileged: "false"

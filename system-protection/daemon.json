@@ -1,0 +1,13 @@
+{
+  "default-ulimits": {
+    "nofile": { "Name": "nofile", "Hard": 65536, "Soft": 65536 },
+    "nproc": { "Name": "nproc", "Hard": 4096, "Soft": 4096 },
+    "memlock": { "Name": "memlock", "Hard": 67108864, "Soft": 67108864 }
+  },
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3"
+  },
+  "storage-driver": "overlay2"
+}

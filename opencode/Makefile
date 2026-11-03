@@ -9,7 +9,10 @@ LINKS   := agents commands opencode.jsonc skills themes tui.jsonc
 install: $(CFG)
 	@for f in $(LINKS); do \
 	  src="$(HERE)$$f"; dest="$(CFG)/$$f"; \
-	  if [ -L "$$dest" ]; then echo "  skip $$f (symlink exists)"; \
+	  if [ -L "$$dest" ]; then \
+	    target=$$(readlink "$$dest"); \
+	    if [ "$$target" = "$$src" ]; then echo "  skip $$f (symlink exists)"; \
+	    else rm "$$dest" && ln -s "$$src" "$$dest" && echo "  relink $$f → $$src"; fi; \
 	  elif [ -e "$$dest" ]; then echo "  WARN $$f exists but is not a symlink — skipping"; \
 	  else ln -s "$$src" "$$dest" && echo "  link $$dest"; fi; \
 	done

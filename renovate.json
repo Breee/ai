@@ -1,0 +1,31 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*mcp*"],
+      "automerge": true,
+      "automergeType": "branch",
+      "labels": ["mcp", "dependencies"]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["\\.mcp\\.json$"],
+      "matchStrings": [
+        "\"args\":\\s*\\[\\s*\"-y\"\\s*,\\s*\"(?<depName>@?[\\w\\d/.-]+)\""
+      ],
+      "datasourceTemplate": "npm",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["compose\\.ya?ml$"],
+      "matchStrings": [
+        "image:\\s*\"(?<depName>mcp[\\w\\d/.:-]+):(?<currentValue>\\d+[\\w\\d.\\-]*)\""
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ]
+}

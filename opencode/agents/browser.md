@@ -1,7 +1,7 @@
 ---
 description: "UI and web interaction agent for browser-based validation and debugging."
 mode: subagent
-model: opencode/nemotron-3.5-lightning-free
+model: github-copilot/claude-haiku-4.5
 permission:
   edit: deny
   bash: deny

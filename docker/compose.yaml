@@ -4,6 +4,7 @@ services:
   traefik:
     image: "traefik:v3"
     container_name: "traefik"
+    profiles: ["core", "langfuse", "otel", "ollama", "nginx", "opendesign"]
     command:
       #- "--log.level=DEBUG"
       - "--api.insecure=true"
@@ -24,6 +25,7 @@ services:
 
   nginx:
     image: "nginx:latest"
+    profiles: ["nginx"]
     networks:
       - proxy
     labels:
@@ -35,6 +37,7 @@ services:
   otel-collector:
     image: otel/opentelemetry-collector-contrib:latest
     restart: unless-stopped
+    profiles: ["otel"]
     networks:
       - proxy
     ports:
@@ -46,6 +49,7 @@ services:
   langfuse-worker:
     image: docker.langfuse.com/langfuse/langfuse-worker:4
     restart: unless-stopped
+    profiles: ["langfuse"]
     depends_on: &langfuse-depends-on
       postgres:
         condition: service_healthy
@@ -58,6 +62,7 @@ services:
     networks:
       - langfuse
     environment: &langfuse-worker-env
+
       NEXTAUTH_URL: http://langfuse.localhost
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
       SALT: mysalt
@@ -91,6 +96,7 @@ services:
   langfuse-web:
     image: docker.langfuse.com/langfuse/langfuse:4
     restart: unless-stopped
+    profiles: ["langfuse"]
     depends_on: *langfuse-depends-on
     networks:
       - langfuse
@@ -128,6 +134,7 @@ services:
   clickhouse:
     image: docker.io/clickhouse/clickhouse-server:25.12
     restart: unless-stopped
+    profiles: ["langfuse"]
     user: "101:101"
     networks:
       - langfuse
@@ -153,6 +160,7 @@ services:
   minio:
     image: cgr.dev/chainguard/minio
     restart: unless-stopped
+    profiles: ["langfuse"]
     entrypoint: sh
     # create the 'langfuse' bucket before starting the service
     command: -c 'mkdir -p /data/langfuse && minio server --address ":9000" --console-address ":9001" /data'
@@ -180,6 +188,7 @@ services:
   redis:
     image: docker.io/redis:7
     restart: unless-stopped
+    profiles: ["langfuse"]
     command: >
       --requirepass myredissecret
       --maxmemory-policy noeviction
@@ -196,6 +205,7 @@ services:
   ollama:
     image: ollama/ollama:latest
     restart: unless-stopped
+    profiles: ["ollama"]
     networks:
       - ollama
     ports:
@@ -207,10 +217,82 @@ services:
         limits:
           cpus: "4.0"
           memory: 8G
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  ollama-init:
+    image: ollama/ollama:latest
+    profiles: ["ollama"]
+    depends_on:
+      ollama:
+        condition: service_healthy
+    networks:
+      - ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        ollama pull qwen2.5:3b && \
+        ollama pull qwen2.5:0.5b && \
+        echo "Models pulled successfully"
+    restart: "no"
+
+  open-design:
+    image: ghcr.io/nexu-io/od:latest
+    container_name: open-design
+    restart: unless-stopped
+    profiles: ["opendesign"]
+    networks:
+      - proxy
+      - ollama
+    environment:
+      NODE_ENV: production
+      NODE_OPTIONS: --max-old-space-size=192
+      OD_BIND_HOST: 0.0.0.0
+      OD_PORT: 7456
+      OD_WEB_PORT: 7456
+      OD_DISABLE_API_AUTH: "1"
+      OD_ALLOWED_ORIGINS: http://opendesign.localhost
+      OD_ALLOWED_INTERNAL_HOSTS: ollama
+      OD_DAEMON_URL: http://127.0.0.1:7456
+    volumes:
+      - open_design_data:/app/.od
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 384m
+    pids_limit: 256
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:7456/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.opendesign.rule=Host(`opendesign.localhost`)"
+      - "traefik.http.routers.opendesign.entrypoints=web"
+      - "traefik.http.services.opendesign.loadbalancer.server.port=7456"
+      - "traefik.http.services.opendesign.loadbalancer.responseforwarding.flushinterval=1ms"
 
   postgres:
     image: docker.io/postgres:17
     restart: unless-stopped
+    profiles: ["langfuse"]
     networks:
       - langfuse
     environment:
@@ -234,6 +316,7 @@ volumes:
   langfuse_minio_data:
   langfuse_redis_data:
   ollama_data:
+  open_design_data:
 
 networks:
   langfuse:
