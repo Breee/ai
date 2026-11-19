@@ -32,10 +32,10 @@ Free model stack using OpenCode Zen. Copilot only as last resort. Updated via `/
 | Agent | Model | Fallback Chain |
 |-------|-------|---------------|
 | `small_model` | `opencode/nemotron-3.5-lightning-free` | — |
-| `model` (main) | `opencode/mimo-v2.5-free` | — |
-| `explore` | `opencode/nemotron-3.5-lightning-free` | North Mini Code → OpenRouter North Mini |
-| `general` | `opencode/mimo-v2.5-free` | Nemotron 3 Ultra → North Mini Code |
-| `browser` | `opencode/nemotron-3.5-lightning-free` | North Mini Code → OpenRouter North Mini |
+| `model` (main) | `opencode/deepseek-v4.1-flash-free` | — |
+| `explore` | `opencode/nemotron-3.5-lightning-free` | Hy4 Flash → OpenRouter Nemotron 3.5 Lightning |
+| `general` | `opencode/deepseek-v4.1-flash-free` | MiMo V2.6 Flash → Hy4 Flash |
+| `browser` | `github-copilot/claude-haiku-4.5` | — |
 
 ### Keeping models current
 

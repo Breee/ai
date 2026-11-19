@@ -1,7 +1,7 @@
 ---
 description: "General-purpose coding agent for repo work, fixes, and implementation tasks."
 mode: subagent
-model: opencode/mimo-v2.5-free
+model: opencode/deepseek-v4.1-flash-free
 permission:
   edit: allow
   bash: allow
