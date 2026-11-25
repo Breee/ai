@@ -38,6 +38,12 @@
       "type": "local",
       "command": ["/usr/local/bin/npx", "-y", "@playwright/mcp"],
       "enabled": true
+    },
+    "gitlab": {
+      "type": "remote",
+      "url": "https://gitlab.com/api/v4/mcp",
+      "oauth": {},
+      "enabled": true
     }
   },
   "skills": {
